@@ -1,56 +1,45 @@
 package com.example.backend_rondas.Controlador;
 
-import java.util.Optional;
+import com.example.backend_rondas.Entidades.Rondas;
+import com.example.backend_rondas.Servicios.RondasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.backend_rondas.Entidades.Novedades;
-import com.example.backend_rondas.Entidades.Rondas;
-import com.example.backend_rondas.Entidades.RondasNovedades;
-import com.example.backend_rondas.Entidades.RondasNovedadesKey;
-import com.example.backend_rondas.Repositorios.NovedadesRepository;
-import com.example.backend_rondas.Repositorios.RondasNovedadesRepository;
-import com.example.backend_rondas.Repositorios.RondasRepository;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/rondas")
+@RequestMapping("/api/rondas")
 public class RondasController {
 
     @Autowired
-    private RondasRepository rondasRepository;
+    private RondasService rondasService;
 
-    @Autowired
-    private NovedadesRepository novedadesRepository;
-
-    @Autowired
-    private RondasNovedadesRepository rondasNovedadesRepository;
-
-    // Otros métodos
-
-    @PostMapping("/{rondaId}/novedades/{novedadId}")
-    public ResponseEntity<RondasNovedades> addNovedadToRonda(@PathVariable Long rondaId, @PathVariable Long novedadId) {
-        Optional<Rondas> ronda = rondasRepository.findById(rondaId);
-        Optional<Novedades> novedad = novedadesRepository.findById(novedadId);
-
-        if (ronda.isPresent() && novedad.isPresent()) {
-            RondasNovedades rondasNovedades = new RondasNovedades(ronda.get(), novedad.get());
-            rondasNovedadesRepository.save(rondasNovedades);
-            return ResponseEntity.ok(rondasNovedades);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping
+    public List<Rondas> getAllRondas() {
+        return rondasService.getAllRondas();
     }
 
-    @DeleteMapping("/{rondaId}/novedades/{novedadId}")
-    public ResponseEntity<Void> removeNovedadFromRonda(@PathVariable Long rondaId, @PathVariable Long novedadId) {
-        RondasNovedadesKey key = new RondasNovedadesKey(rondaId, novedadId);
-        if (rondasNovedadesRepository.existsById(key)) {
-            rondasNovedadesRepository.deleteById(key);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Rondas> getRondaById(@PathVariable Long id) {
+        Optional<Rondas> ronda = rondasService.getRondaById(id);
+        return ronda.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Rondas createRonda(@RequestBody Rondas ronda) {
+        return rondasService.createRonda(ronda);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Rondas> updateRonda(@PathVariable Long id, @RequestBody Rondas ronda) {
+        Rondas updatedRonda = rondasService.updateRonda(id, ronda);
+        return updatedRonda != null ? ResponseEntity.ok(updatedRonda) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRonda(@PathVariable Long id) {
+        return rondasService.deleteRonda(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
-

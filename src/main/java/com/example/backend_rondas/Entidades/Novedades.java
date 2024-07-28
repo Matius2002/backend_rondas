@@ -1,51 +1,45 @@
 package com.example.backend_rondas.Entidades;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Novedades")
+@Table(name = "novedades")
 public class Novedades {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "categoria_novedad", nullable = false)
-    private String categoria_novedad;
+    private String categoriaNovedad;
 
     @Column(name = "novedad", nullable = false)
     private String novedad;
 
-    @Column(name = "otro", nullable = false)
+    @Column(name = "otro")
     private String otro;
 
     @Column(name = "prioridad", nullable = false)
     private String prioridad;
 
-    @Column(name = "descripcion", nullable = false)
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado")
     private String estado;
 
-    @Column(name = "created_at", nullable = false)
-    private String created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
-    private String updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    public Novedades() {}
+    // Relación con la entidad Rondas
+    @ManyToOne
+    @JoinColumn(name = "ronda_id")
+    private Rondas ronda;
 
-    public Novedades(String categoria_novedad, String novedad, String otro, String prioridad, String descripcion, String estado, String created_at, String updated_at) {
-        this.categoria_novedad = categoria_novedad;
-        this.novedad = novedad;
-        this.otro = otro;
-        this.prioridad = prioridad;
-        this.descripcion = descripcion;
-        this.estado = estado;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -54,12 +48,12 @@ public class Novedades {
         this.id = id;
     }
 
-    public String getCategoria_novedad() {
-        return categoria_novedad;
+    public String getCategoriaNovedad() {
+        return categoriaNovedad;
     }
 
-    public void setCategoria_novedad(String categoria_novedad) {
-        this.categoria_novedad = categoria_novedad;
+    public void setCategoriaNovedad(String categoriaNovedad) {
+        this.categoriaNovedad = categoriaNovedad;
     }
 
     public String getNovedad() {
@@ -102,35 +96,43 @@ public class Novedades {
         this.estado = estado;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Rondas getRonda() {
+        return ronda;
+    }
+
+    public void setRonda(Rondas ronda) {
+        this.ronda = ronda;
     }
 
     @Override
     public String toString() {
         return "Novedades{" +
                 "id=" + id +
-                ", categoria_novedad='" + categoria_novedad + '\'' +
+                ", categoria_novedad='" + categoriaNovedad + '\'' +
                 ", novedad='" + novedad + '\'' +
                 ", otro='" + otro + '\'' +
                 ", prioridad='" + prioridad + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", estado='" + estado + '\'' +
-                ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
+                ", created_at='" + createdAt + '\'' +
+                ", updated_at='" + updatedAt + '\'' +
+                ", ronda=" + ronda +
                 '}';
     }
 }
-

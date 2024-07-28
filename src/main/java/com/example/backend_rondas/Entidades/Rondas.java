@@ -1,40 +1,42 @@
 package com.example.backend_rondas.Entidades;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "Rondas")
+@Table(name = "rondas")
 public class Rondas {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fecha", nullable = false)
-    private String fecha;
+    @Column(name = "categoria_ronda", nullable = false)
+    private String categoriaRonda;
 
-    @Column(name = "tecnico_responsable", nullable = false)
-    private String tecnico_responsable;
+    @Column(name = "detalle", nullable = false)
+    private String detalle;
 
-    @Column(name = "created_at", nullable = false)
-    private String created_at;
+    @Column(name = "prioridad", nullable = false)
+    private String prioridad;
 
-    @Column(name = "updated_at", nullable = false)
-    private String updated_at;
+    @Column(name = "descripcion")
+    private String descripcion;
 
+    @Column(name = "estado")
+    private String estado;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    // Relación con la entidad Novedades
     @OneToMany(mappedBy = "ronda", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RondasNovedades> rondasNovedades = new HashSet<>();
+    private List<Novedades> novedades;
 
-    public Rondas() {}
-
-    public Rondas(String fecha, String tecnico_responsable, String created_at, String updated_at) {
-        this.fecha = fecha;
-        this.tecnico_responsable = tecnico_responsable;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -43,54 +45,82 @@ public class Rondas {
         this.id = id;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getCategoriaRonda() {
+        return categoriaRonda;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setCategoriaRonda(String categoriaRonda) {
+        this.categoriaRonda = categoriaRonda;
     }
 
-    public String getTecnico_responsable() {
-        return tecnico_responsable;
+    public String getDetalle() {
+        return detalle;
     }
 
-    public void setTecnico_responsable(String tecnico_responsable) {
-        this.tecnico_responsable = tecnico_responsable;
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getPrioridad() {
+        return prioridad;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public Set<RondasNovedades> getRondasNovedades() {
-        return rondasNovedades;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setRondasNovedades(Set<RondasNovedades> rondasNovedades) {
-        this.rondasNovedades = rondasNovedades;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public List<Novedades> getNovedades() {
+        return novedades;
+    }
+
+    public void setNovedades(List<Novedades> novedades) {
+        this.novedades = novedades;
     }
 
     @Override
     public String toString() {
         return "Rondas{" +
                 "id=" + id +
-                ", fecha='" + fecha + '\'' +
-                ", tecnico_responsable='" + tecnico_responsable + '\'' +
-                ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
+                ", categoria_ronda='" + categoriaRonda + '\'' +
+                ", detalle='" + detalle + '\'' +
+                ", prioridad='" + prioridad + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", estado='" + estado + '\'' +
+                ", created_at='" + createdAt + '\'' +
+                ", updated_at='" + updatedAt + '\'' +
+                ", novedades=" + novedades +
                 '}';
     }
 }
