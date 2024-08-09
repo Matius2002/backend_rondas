@@ -31,9 +31,6 @@ public class Rondas {
     private LocalDateTime updatedAt;
 
     // Getters y Setters
-    /*(Getters: es utilizado para leer o acceder al valor de un atributo privado de una clase.)
-     * (Setters: es utilizado para modificar o actualizar el valor de un atributo privado de una clase.)
-    */
     public Long getId() {
         return id;
     }

@@ -1,3 +1,4 @@
+/*Controlador de tipo de ronda*/
 package com.example.backend_rondas.Controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;

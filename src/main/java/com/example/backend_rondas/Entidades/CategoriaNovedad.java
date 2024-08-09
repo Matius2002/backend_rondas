@@ -1,3 +1,4 @@
+/*Entidad de tipo de ronda*/
 package com.example.backend_rondas.Entidades;
 
 import jakarta.persistence.Entity;
