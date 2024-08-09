@@ -2,29 +2,27 @@ package com.example.backend_rondas.Entidades;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "rondas")
+@Table(name = "rondas") //Tabla rondas
 public class Rondas {
+
+    /*Estas anotaciones ayudan a definir cómo se deben mapear los atributos de una clase a columnas en una tabla de base de datos */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "categoria_ronda", nullable = false)
-    private String categoriaRonda;
+    @Column(name = "torre", nullable = false)
+    private String torre;
 
-    @Column(name = "detalle", nullable = false)
-    private String detalle;
+    @Column(name = "piso", nullable = false)
+    private String piso;
 
-    @Column(name = "prioridad", nullable = false)
-    private String prioridad;
+    @Column(name = "area", nullable = false)
+    private String area;
 
-    @Column(name = "descripcion")
-    private String descripcion;
-
-    @Column(name = "estado")
-    private String estado;
+    @Column(name = "tecnico_responsable", nullable = false)
+    private String tecnicoResponsable;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -32,11 +30,10 @@ public class Rondas {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Relación con la entidad Novedades
-    @OneToMany(mappedBy = "ronda", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Novedades> novedades;
-
-    // Getters y setters
+    // Getters y Setters
+    /*(Getters: es utilizado para leer o acceder al valor de un atributo privado de una clase.)
+     * (Setters: es utilizado para modificar o actualizar el valor de un atributo privado de una clase.)
+    */
     public Long getId() {
         return id;
     }
@@ -45,44 +42,36 @@ public class Rondas {
         this.id = id;
     }
 
-    public String getCategoriaRonda() {
-        return categoriaRonda;
+    public String getTorre() {
+        return torre;
     }
 
-    public void setCategoriaRonda(String categoriaRonda) {
-        this.categoriaRonda = categoriaRonda;
+    public void setTorre(String torre) {
+        this.torre = torre;
     }
 
-    public String getDetalle() {
-        return detalle;
+    public String getPiso() {
+        return piso;
     }
 
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
+    public void setPiso(String piso) {
+        this.piso = piso;
     }
 
-    public String getPrioridad() {
-        return prioridad;
+    public String getArea() {
+        return area;
     }
 
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getTecnicoResponsable() {
+        return tecnicoResponsable;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setTecnicoResponsable(String tecnicoResponsable) {
+        this.tecnicoResponsable = tecnicoResponsable;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -101,26 +90,18 @@ public class Rondas {
         this.updatedAt = updatedAt;
     }
 
-    public List<Novedades> getNovedades() {
-        return novedades;
-    }
-
-    public void setNovedades(List<Novedades> novedades) {
-        this.novedades = novedades;
-    }
-
+    /*Cuando sobrescribes este método en una clase, permites que se devuelva una descripción legible y útil del estado del objeto cuando se imprima
+     o se convierta a una cadena.*/
     @Override
     public String toString() {
         return "Rondas{" +
                 "id=" + id +
-                ", categoria_ronda='" + categoriaRonda + '\'' +
-                ", detalle='" + detalle + '\'' +
-                ", prioridad='" + prioridad + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", estado='" + estado + '\'' +
-                ", created_at='" + createdAt + '\'' +
-                ", updated_at='" + updatedAt + '\'' +
-                ", novedades=" + novedades +
+                ", torre='" + torre + '\'' +
+                ", piso='" + piso + '\'' +
+                ", area='" + area + '\'' +
+                ", tecnicoResponsable='" + tecnicoResponsable + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

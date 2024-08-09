@@ -2,6 +2,7 @@ package com.example.backend_rondas.Entidades;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "novedades")
@@ -10,23 +11,26 @@ public class Novedades {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "categoria_novedad", nullable = false)
-    private String categoriaNovedad;
+    @ManyToOne
+    @JoinColumn(name = "categoria_novedad_id")
+    private CategoriaNovedad categoriaNovedad;
 
-    @Column(name = "novedad", nullable = false)
-    private String novedad;
-
-    @Column(name = "otro")
-    private String otro;
+    @Column(name = "tipo_novedad", nullable = false)
+    private String tipoNovedad;
 
     @Column(name = "prioridad", nullable = false)
     private String prioridad;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name = "estado")
-    private String estado;
+    @Column(name = "novedad_resuelta", nullable = false)
+    private Boolean novedadResuelta;
+
+    @ElementCollection
+    @CollectionTable(name = "novedad_imagenes", joinColumns = @JoinColumn(name = "novedad_id"))
+    @Column(name = "url")
+    private List<String> imagenes;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -34,12 +38,8 @@ public class Novedades {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Relación con la entidad Rondas
-    @ManyToOne
-    @JoinColumn(name = "ronda_id")
-    private Rondas ronda;
-
     // Getters y setters
+
     public Long getId() {
         return id;
     }
@@ -48,28 +48,12 @@ public class Novedades {
         this.id = id;
     }
 
-    public String getCategoriaNovedad() {
-        return categoriaNovedad;
+    public String getTipoNovedad() {
+        return tipoNovedad;
     }
 
-    public void setCategoriaNovedad(String categoriaNovedad) {
-        this.categoriaNovedad = categoriaNovedad;
-    }
-
-    public String getNovedad() {
-        return novedad;
-    }
-
-    public void setNovedad(String novedad) {
-        this.novedad = novedad;
-    }
-
-    public String getOtro() {
-        return otro;
-    }
-
-    public void setOtro(String otro) {
-        this.otro = otro;
+    public void setTipoNovedad(String tipoNovedad) {
+        this.tipoNovedad = tipoNovedad;
     }
 
     public String getPrioridad() {
@@ -88,12 +72,20 @@ public class Novedades {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
-        return estado;
+    public Boolean getNovedadResuelta() {
+        return novedadResuelta;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setNovedadResuelta(Boolean novedadResuelta) {
+        this.novedadResuelta = novedadResuelta;
+    }
+
+    public List<String> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<String> imagenes) {
+        this.imagenes = imagenes;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -110,29 +102,5 @@ public class Novedades {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Rondas getRonda() {
-        return ronda;
-    }
-
-    public void setRonda(Rondas ronda) {
-        this.ronda = ronda;
-    }
-
-    @Override
-    public String toString() {
-        return "Novedades{" +
-                "id=" + id +
-                ", categoria_novedad='" + categoriaNovedad + '\'' +
-                ", novedad='" + novedad + '\'' +
-                ", otro='" + otro + '\'' +
-                ", prioridad='" + prioridad + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", estado='" + estado + '\'' +
-                ", created_at='" + createdAt + '\'' +
-                ", updated_at='" + updatedAt + '\'' +
-                ", ronda=" + ronda +
-                '}';
     }
 }
